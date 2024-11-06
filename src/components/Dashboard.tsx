@@ -1,3 +1,4 @@
+// src/components/Dashboard.tsx
 import React from 'react';
 import { TrendingUp, ArrowUpRight, ArrowDownRight, Activity } from 'lucide-react';
 import PerformanceMetrics from './PerformanceMetrics';
@@ -7,19 +8,19 @@ import BotControls from './BotControls';
 
 const Dashboard = () => {
   return (
-    <div className="p-6 space-y-6">
-      <header className="flex justify-between items-center mb-8">
+    <div className="p-4 md:p-6 space-y-4 md:space-y-6">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 md:mb-8">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
             Warthog v16
           </h1>
-          <p className="text-gray-400">Advanced Metals & Crypto Trading Bot</p>
+          <p className="text-sm md:text-base text-gray-400">Advanced Metals & Crypto Trading Bot</p>
         </div>
       </header>
 
       <BotControls />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
           title="Total Profit"
           value="$24,521.34"
@@ -50,7 +51,7 @@ const Dashboard = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         <ActiveTrades />
         <PerformanceMetrics />
       </div>
@@ -60,25 +61,19 @@ const Dashboard = () => {
   );
 };
 
+// ```jsx
 const MetricCard = ({ title, value, change, isPositive, icon }) => {
   return (
-    <div className="p-6 rounded-xl bg-gray-800/50 border border-gray-700/50 backdrop-blur-sm">
-      <div className="flex justify-between items-start">
-        <div>
-          <p className="text-gray-400 text-sm">{title}</p>
-          <h3 className="text-2xl font-bold mt-1">{value}</h3>
-        </div>
+    <div className="bg-gray-800 p-4 rounded-lg shadow-md">
+      <div className="flex items-center space-x-2">
         {icon}
-      </div>
-      <div className="mt-2 flex items-center">
-        {isPositive ? (
-          <ArrowUpRight className="w-4 h-4 text-green-400" />
-        ) : (
-          <ArrowDownRight className="w-4 h-4 text-red-400" />
-        )}
-        <span className={`text-sm ml-1 ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
-          {change}
-        </span>
+        <div>
+          <h2 className="text-lg font-semibold">{title}</h2>
+          <p className="text-xl font-bold">{value}</p>
+          <p className={`text-sm ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
+            {change}
+          </p>
+        </div>
       </div>
     </div>
   );
