@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -7,8 +7,24 @@ import RiskManagement from './components/RiskManagement';
 import History from './components/History';
 import Settings from './components/Settings';
 import MobileNav from './components/MobileNav';
+import LoadingPage from './components/LoadingPage';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initialization process
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3 seconds loading time
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
   return (
     <BrowserRouter>
       <div className="flex h-screen bg-gray-900 text-white">
