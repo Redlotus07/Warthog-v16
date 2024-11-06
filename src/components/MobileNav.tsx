@@ -1,10 +1,11 @@
+// src/components/MobileNav.tsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Activity, TrendingUp, Shield, History, Settings } from 'lucide-react';
 
 const MobileNav = () => {
   return (
-    <nav className="bg-gray-800 border-t border-gray-700 px-4 py-2">
+    <nav className="bg-gray-800 border-t border-gray-700 px-2 py-3">
       <div className="flex justify-around items-center">
         <NavLink
           to="/dashboard"
@@ -14,7 +15,7 @@ const MobileNav = () => {
             }`
           }
         >
-          <Activity className="w-5 h-5" />
+          <Activity className="w-6 h-6" />
           <span className="text-xs">Dashboard</span>
         </NavLink>
         
@@ -26,7 +27,7 @@ const MobileNav = () => {
             }`
           }
         >
-          <TrendingUp className="w-5 h-5" />
+          <TrendingUp className="w-6 h-6" />
           <span className="text-xs">Trading</span>
         </NavLink>
         
@@ -38,7 +39,7 @@ const MobileNav = () => {
             }`
           }
         >
-          <Shield className="w-5 h-5" />
+          <Shield className="w-6 h-6" />
           <span className="text-xs">Risk</span>
         </NavLink>
         
@@ -50,7 +51,7 @@ const MobileNav = () => {
             }`
           }
         >
-          <History className="w-5 h-5" />
+          <History className="w-6 h-6" />
           <span className="text-xs">History</span>
         </NavLink>
         
@@ -62,7 +63,7 @@ const MobileNav = () => {
             }`
           }
         >
-          <Settings className="w-5 h-5" />
+          <Settings className="w-6 h-6" />
           <span className="text-xs">Settings</span>
         </NavLink>
       </div>
