@@ -1,17 +1,18 @@
 import axios from 'axios';
 import { mlService } from '../mlService.js';
 import { performanceTracker } from '../performanceTracking.js';
+import xml2js from 'xml2js';
 
 class NewsService {
   constructor() {
     this.newsProviders = [
       {
         name: 'ForexFactory',
-        url: process.env.FOREX_FACTORY_API_URL
+        url: process.env.FOREX_FACTORY_API_URL || 'https://www.forexfactory.com/feeds/news'
       },
       {
         name: 'Investing.com',
-        url: process.env.www.investing.com/currencies
+        url: process.env.INVESTING_COM_API_URL || 'https://www.investing.com/rss/news_1.rss'
       }
     ];
   }
@@ -22,6 +23,47 @@ class NewsService {
     );
 
     return this.mergeAndSortEvents(events.flat());
+  }
+
+  async fetchEvents(provider) {
+    try {
+      const response = await axios.get(provider.url);
+      const parser = new xml2js.Parser();
+      const result = await parser.parseStringPromise(response.data);
+      return this.extractEventsFromRSS(result, provider.name);
+    } catch (error) {
+      console.error(`Error fetching events from ${provider.name}:`, error);
+      return [];
+    }
+  }
+
+  extractEventsFromRSS(rssData, providerName) {
+    const events = [];
+    const items = rssData.rss.channel[0].item;
+
+    items.forEach(item => {
+      events.push({
+        title: item.title[0],
+        link: item.link[0],
+        pubDate: new Date(item.pubDate[0]),
+        description: item.description[0],
+        provider: providerName,
+        type: this.determineEventType(item.title[0]), // You can implement this function based on your needs
+        importance: this.determineImportance(item.title[0]) // You can implement this function based on your needs
+      });
+    });
+
+    return events;
+  }
+
+  determineEventType(title) {
+    // Implement logic to determine event type based on title
+    return 'NFP'; // Example placeholder
+  }
+
+  determineImportance(title) {
+    // Implement logic to determine importance based on title
+    return 'HIGH'; // Example placeholder
   }
 
   async analyzeNewsImpact(event) {
@@ -78,7 +120,7 @@ class NewsService {
         strategy: 'NEWS_BREAKOUT',
         timeframe: '1H'
       };
-    }
+ }
     
     return {
       action: 'HOLD',
