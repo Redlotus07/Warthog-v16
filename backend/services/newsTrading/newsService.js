@@ -11,7 +11,7 @@ class NewsService {
       },
       {
         name: 'Investing.com',
-        url: process.env.INVESTING_API_URL
+        url: process.env.www.investing.com/currencies
       }
     ];
   }
